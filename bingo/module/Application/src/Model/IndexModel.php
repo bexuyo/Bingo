@@ -31,7 +31,7 @@
 	    	return $data->fetchAll();
 	    }
 
-	    public function login($username, $password){
+	     public function register($username, $password){
 	    	$configArray = array(
 			    'driver' => 'Mysqli',
 			    'database' => 'game',
@@ -40,16 +40,14 @@
 			    'hostname' => 'phpgameserver.mysql.database.azure.com',
 			    'port' => '3306'
 			 );
-
-	    	$adapter = new \Zend\Db\Adapter\Adapter($configArray);
-
-	    	$query = sprintf("CALL spRegister(`%s`, `%s`)", $username, $password);
+ 	    	$adapter = new \Zend\Db\Adapter\Adapter($configArray);
+ 	    	$query = sprintf("CALL spRegister(`%s`, `%s`)", $username, $password);
 	    	
 	    	$data = $adapter->query($query);
 	    	return $data->fetchAll();
 	    }
 
-	    public function changePassword($oldPassword, $newPassword){
+ 	    public function changePassword($oldPassword, $newPassword){
 	    	$configArray = array(
 			    'driver' => 'Mysqli',
 			    'database' => 'game',
@@ -58,16 +56,13 @@
 			    'hostname' => 'phpgameserver.mysql.database.azure.com',
 			    'port' => '3306'
 			 );
-
-	    	$adapter = new \Zend\Db\Adapter\Adapter($configArray);
-
-	    	$query = sprintf("CALL spChangePassword(`%s`, `%s`)", $oldPassword, $newPassword);
-
-	    	$data = $adapter->query($query);
+ 	    	$adapter = new \Zend\Db\Adapter\Adapter($configArray);
+ 	    	$query = sprintf("CALL spChangePassword(`%s`, `%s`)", $oldPassword, $newPassword);
+ 	    	$data = $adapter->query($query);
 	    	return $data->fetchAll();
 	    }
-
-	    public function showInfo($username){
+	    
+ 	    public function showInfo($username){
 	    	$configArray = array(
 			    'driver' => 'Mysqli',
 			    'database' => 'game',
