@@ -22,7 +22,25 @@ class IndexController extends AbstractActionController
     public function loginAction()
     {
     	$model = new IndexModel();
-    	$model->login("abc", "abc");
+    	$model->login($_POST['username'], $_POST['password']);
+    }
+
+    public function registerAction()
+    {
+        $model = new IndexModel();
+        $model->login($_POST['username'], $_POST['password']);
+    }
+
+    public function changePasswordAction()
+    {
+        $model = new IndexModel();
+        $model->changePassword($_POST['oldPassword'], $_POST['newPassword']);
+    }
+
+    public function showInfoAction()
+    {
+        $model = new IndexModel();
+        $model->showInfo(($_POST['username']);
     }
 }
 	
