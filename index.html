@@ -34,8 +34,11 @@
 
     var player;
     var cursors;
+    var gifts;
+    var yetis;
+    var score = 0;
     var platforms;
-    var pic;
+    var gameOver = false;
 
     var game = new Phaser.Game(config);
 
@@ -59,6 +62,8 @@
         this.load.image('sign1', 'image/Object/Sign_1.png');
         this.load.image('sign2', 'image/Object/Sign_2.png');
         this.load.image('ice', 'image/Object/Icebox.png');
+        this.load.image('gift', 'image/Object/gift.png');
+        this.load.image('yeti', 'image/Object/yeti.gif');
 
         //test purpose only, need to change to other sprite
         this.load.spritesheet('santaIdle', 'image/png/idle.png', { frameWidth: (2039/6), frameHeight: (1640/3) });
@@ -66,6 +71,7 @@
         this.load.spritesheet('santaSlide', 'image/png/slide.png', { frameWidth: (1670/3), frameHeight: (1748/4) });
         this.load.spritesheet('santaJump', 'image/png/jump.png', { frameWidth: (2278/6), frameHeight: (1647/3) });
         this.load.spritesheet('santaRun', 'image/png/run.png', { frameWidth: (1416/4), frameHeight: (1679/3) });
+        this.load.spritesheet('santaDead', 'image/png/dead.png', { frameWidth: (2006/4), frameHeight: (1753/4) });
     }
 
     function create ()
@@ -153,15 +159,46 @@
           repeat: -1
         });
 
+        this.anims.create({
+          key: 'dead',
+          frames: this.anims.generateFrameNumbers('santaDead', { start: 0, end: 16 }),
+          frameRate: 10,
+          repeat: -1
+        });
+
 
         cursors = this.input.keyboard.createCursorKeys();
 
+        gifts = this.physics.add.group({
+            key: 'gift',
+            repeat: 21,
+            setXY: { x: 12, y: 0, stepX: 70 },
+        });
+
+        gifts.children.iterate(function (child) {
+            child.setBounceY(Phaser.Math.FloatBetween(0.1, 0.2));
+        });
+
+        yetis = this.physics.add.group();
+
+        scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#fffafa' });
+
         this.physics.add.collider(player, platforms);
+        this.physics.add.collider(gifts, platforms);
+        this.physics.add.collider(yetis, platforms);
+
+        this.physics.add.overlap(player, gifts, collectGift, null, this);
+        this.physics.add.collider(player, yetis, die, null, this);
     }
 
     function update ()
     {
       //maybe needs update later
+      if(gameOver)
+      {
+        return;
+      }
+
       if (cursors.left.isDown)
       {
         if (cursors.shift.isDown && player.body.touching.down)
@@ -201,11 +238,12 @@
 
       if (cursors.up.isDown && player.body.touching.down)
       {
-        player.setVelocityY(-330);
+        player.setVelocityY(-360);
 
         player.anims.play('jump', true);
       }
 
+      //need to add shift slide feature
       if (cursors.down.isDown && player.body.touching.down)
       {
         player.anims.play('slide', true);
@@ -217,6 +255,44 @@
         else
           player.anims.play('idle', true);
       }
+    }
+
+    function collectGift(player, gift)
+    {
+      gift.disableBody(true, true);
+
+      score += 10;
+      scoreText.setText('Score: ' + score);
+
+      if (gifts.countActive(true) === 0)
+      {
+        gifts.children.iterate(function (child) {
+
+          child.enableBody(true, child.x, 0, true, true);
+
+        });
+
+        var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
+
+        var yeti = yetis.create(x, 16, 'yeti');
+        yeti.setBounce(1);
+        yeti.setCollideWorldBounds(true);
+        yeti.setVelocity(Phaser.Math.Between(-200, 200), 20);
+        yeti.allowGravity = false;
+
+      }
+
+    }
+
+    function die(player, yeti)
+    {
+      this.physics.pause();
+
+      gameOver = true;
+
+      //need to change for better animation q 
+      player.anims.play('santaDead');
+      break;
     }
 
 </script>
