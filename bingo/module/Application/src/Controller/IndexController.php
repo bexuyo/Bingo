@@ -9,6 +9,8 @@ namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Zend\Db\Adapter\Adapter;
+use Application\Model\IndexModel;
 
 class IndexController extends AbstractActionController
 {
@@ -16,4 +18,11 @@ class IndexController extends AbstractActionController
     {
         return new ViewModel();
     }
+
+    public function loginAction()
+    {
+    	$model = new IndexModel();
+    	$model->login("abc", "abc");
+    }
 }
+	
