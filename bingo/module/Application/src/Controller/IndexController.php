@@ -36,11 +36,11 @@ class IndexController extends AbstractActionController
         $model = new IndexModel();
         $model->changePassword($_POST['oldPassword'], $_POST['newPassword']);
     }
-    
+
      public function showInfoAction()
     {
         $model = new IndexModel();
-        $model->showInfo(($_POST['username']);
+        $model->showInfo(($_POST['username']));
     }
 }
 	
