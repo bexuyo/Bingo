@@ -21,26 +21,38 @@ class IndexController extends AbstractActionController
 
     public function loginAction()
     {
+        $username = isset($_POST['username']) ? $_POST['username'] : '';
+        $password = isset($_POST['password']) ? $_POST['password'] : '';
+
     	$model = new IndexModel();
-    	$model->login($_POST['username'], $_POST['password']);
+    	$model->login($username, $password);
     }
 
      public function registerAction()
     {
+        $username = isset($_POST['username']) ? $_POST['username'] : '';
+        $password = isset($_POST['password']) ? $_POST['password'] : '';
+
         $model = new IndexModel();
-        $model->login($_POST['username'], $_POST['password']);
+        $model->register($username, $password);
     }
 
      public function changePasswordAction()
     {
+        $userID = isset($_POST['userID']) ? $_POST['userID'] : '';
+        $oldPassword = isset($_POST['username']) ? $_POST['username'] : '';
+        $newPassword = isset($_POST['password']) ? $_POST['password'] : '';
+
         $model = new IndexModel();
-        $model->changePassword($_POST['oldPassword'], $_POST['newPassword']);
+        $model->changePassword($userID, $oldPassword, $newPassword);
     }
 
-     public function showInfoAction()
+     public function getHistoryAction()
     {
+        $userID = isset($_POST['userID']) ? $_POST['userID'] : '';
+
         $model = new IndexModel();
-        $model->showInfo(($_POST['username']));
+        $model->getHistory($userID);
     }
 }
 	

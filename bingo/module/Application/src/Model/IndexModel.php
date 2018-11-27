@@ -5,13 +5,6 @@
 	use Zend\Db\ResultSet\ResultSet;	
 
 	class IndexModel{
-		private $adapter;
-		private $configArray = array(
-			    'driver' => 'Mysqli',
-			    'database' => 'phpgameserver.mysql.database.azure.com',
-			    'username' => 'gameOwner@phpgameserver',
-			    'password' => 'Password123'
-			 );
 
 	    public function login($username, $password){
 	    	$configArray = array(
@@ -25,10 +18,12 @@
 
 	    	$adapter = new \Zend\Db\Adapter\Adapter($configArray);
 
-	    	$query = sprintf("CALL spLogin(`%s`, `%s`)", $username, $password);
+	    	$query = sprintf("CALL spLogin('%s', '%s')", $username, $password);
 
-	    	$data = $adapter->query($query);
-	    	return $data->fetchAll();
+	    	$statement = $adapter->createStatement($query);
+    		$result = $statement->execute()->current();
+
+	    	return $result;
 	    }
 
 	     public function register($username, $password){
@@ -41,13 +36,16 @@
 			    'port' => '3306'
 			 );
  	    	$adapter = new \Zend\Db\Adapter\Adapter($configArray);
- 	    	$query = sprintf("CALL spRegister(`%s`, `%s`)", $username, $password);
+
+ 	    	$query = sprintf("CALL spRegister('%s', '%s')", $username, $password);
 	    	
-	    	$data = $adapter->query($query);
-	    	return $data->fetchAll();
+	    	$statement = $adapter->createStatement($query);
+    		$result = $statement->execute()->current();
+
+	    	return $result;
 	    }
 
- 	    public function changePassword($oldPassword, $newPassword){
+ 	    public function changePassword($userID, $oldPassword, $newPassword){
 	    	$configArray = array(
 			    'driver' => 'Mysqli',
 			    'database' => 'game',
@@ -57,12 +55,15 @@
 			    'port' => '3306'
 			 );
  	    	$adapter = new \Zend\Db\Adapter\Adapter($configArray);
- 	    	$query = sprintf("CALL spChangePassword(`%s`, `%s`)", $oldPassword, $newPassword);
- 	    	$data = $adapter->query($query);
-	    	return $data->fetchAll();
+ 	    	$query = sprintf("CALL spChangePassword(%s, '%s', '%s')", $userID, $oldPassword, $newPassword);
+
+ 	    	$statement = $adapter->createStatement($query);
+    		$result = $statement->execute()->current();
+
+	    	return $result;
 	    }
 	    
- 	    public function showInfo($username){
+ 	    public function getHistory($username){
 	    	$configArray = array(
 			    'driver' => 'Mysqli',
 			    'database' => 'game',
@@ -71,6 +72,14 @@
 			    'hostname' => 'phpgameserver.mysql.database.azure.com',
 			    'port' => '3306'
 			 );
+
+	    	$adapter = new \Zend\Db\Adapter\Adapter($configArray);
+ 	    	$query = sprintf("CALL spGetHistory('%s', %s', '%s')", $userID, $oldPassword, $newPassword);
+
+ 	    	$statement = $adapter->createStatement($query);
+    		$result = $statement->execute()->current();
+
+    		return $result;
 	    }
 	}
 
