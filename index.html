@@ -59,14 +59,13 @@
         this.load.image('sign1', 'image/Object/Sign_1.png');
         this.load.image('sign2', 'image/Object/Sign_2.png');
         this.load.image('ice', 'image/Object/Icebox.png');
+
         //test purpose only, need to change to other sprite
-        this.load.spritesheet('santa', 'image/Object/dude.png', { frameWidth: 32, frameHeight: 48 });
-        this.load.image('run1', 'image/png/Run (1)');
-        this.load.image('run2', 'image/png/Run (2)');
-        this.load.image('run3', 'image/png/Run (3)');
-        this.load.image('run4', 'image/png/Run (4)');
-        this.load.image('run5', 'image/png/Run (5)');
-        this.load.image('run6', 'image/png/Run (6)');
+        this.load.spritesheet('santaIdle', 'image/png/idle.png', { frameWidth: (2039/6), frameHeight: (1640/3) });
+        this.load.spritesheet('santaWalk', 'image/png/walk.png', { frameWidth: (1803/5), frameHeight: (1676/3) });
+        this.load.spritesheet('santaSlide', 'image/png/slide.png', { frameWidth: (1670/3), frameHeight: (1748/4) });
+        this.load.spritesheet('santaJump', 'image/png/jump.png', { frameWidth: (2278/6), frameHeight: (1647/3) });
+        this.load.spritesheet('santaRun', 'image/png/run.png', { frameWidth: (1416/4), frameHeight: (1679/3) });
     }
 
     function create ()
@@ -99,8 +98,8 @@
         this.add.image(1370, 500, 'tree2');
         this.add.image(1100, 585, 'sign1');
         this.add.image(188, 370, 'tree1');
-        platforms.create(692, 510, 'tiles14');
-        platforms.create(820, 510, 'tiles16');
+        platforms.create(692, 470, 'tiles14');
+        platforms.create(820, 470, 'tiles16');
         platforms.create(1200, 200, 'tiles1');
         platforms.create(1328, 200, 'tiles2');
         platforms.create(1456, 200, 'tiles2');
@@ -108,29 +107,52 @@
         platforms.create(1020, 350, 'tiles15');
 
         //maybe needs update later
-        //player = this.physics.add.sprite(100, 450, 'santa');
+        player = this.physics.add.sprite(100, 200, 'santaIdle');
+        player.setDisplaySize((2039/30), (1640/15));
         player.setCollideWorldBounds(true);
 
         //maybe needs update later
         this.anims.create({
         key: 'left',
-        frames: this.anims.generateFrameNumbers('santa', { start: 0, end: 3 }),
+        frames: this.anims.generateFrameNumbers('santaWalk', { start: 0, end: 12 }),
         frameRate: 10,
         repeat: -1
         });
 
         this.anims.create({
-          key: 'turn',
-          frames: [ { key: 'santa', frame: 4 } ],
+          key: 'idle',
+          frames: this.anims.generateFrameNumbers('santaIdle', { start: 0, end: 15 }),
           frameRate: 20
         });
 
         this.anims.create({
           key: 'right',
-          frames: this.anims.generateFrameNumbers('santa', { start: 5, end: 8 }),
+          frames: this.anims.generateFrameNumbers('santaWalk', { start: 0, end: 12 }),
           frameRate: 10,
           repeat: -1
         });
+
+        this.anims.create({
+          key: 'slide',
+          frames: this.anims.generateFrameNumbers('santaSlide', { start: 0, end: 10 }),
+          frameRate: 10,
+          repeat: -1
+        });
+
+        this.anims.create({
+          key: 'jump',
+          frames: this.anims.generateFrameNumbers('santaJump', { start: 0, end: 15 }),
+          frameRate: 10,
+          repeat: -1
+        });
+
+        this.anims.create({
+          key: 'run',
+          frames: this.anims.generateFrameNumbers('santaRun', { start: 0, end: 10 }),
+          frameRate: 10,
+          repeat: -1
+        });
+
 
         cursors = this.input.keyboard.createCursorKeys();
 
@@ -142,26 +164,58 @@
       //maybe needs update later
       if (cursors.left.isDown)
       {
+        if (cursors.shift.isDown && player.body.touching.down)
+        {
+          player.setVelocityX(-260);
+
+          player.anims.play('run', true);
+        }
+        else
+        {
         player.setVelocityX(-160);
 
         player.anims.play('left', true);
+        }
       }
       else if (cursors.right.isDown)
       {
-        player.setVelocityX(160);
+        if (cursors.shift.isDown && player.body.touching.down)
+        {
+          player.setVelocityX(260);
 
-        player.anims.play('right', true);
+          player.anims.play('run', true);
+        }
+        else
+        {
+          player.setVelocityX(160);
+
+          player.anims.play('right', true);
+        }
       }
       else
       {
         player.setVelocityX(0);
 
-        player.anims.play('turn');
+        player.anims.play('idle', true);
       }
 
       if (cursors.up.isDown && player.body.touching.down)
       {
         player.setVelocityY(-330);
+
+        player.anims.play('jump', true);
+      }
+
+      if (cursors.down.isDown && player.body.touching.down)
+      {
+        player.anims.play('slide', true);
+
+        if(cursors.left.isDown)
+          player.setVelocityX(-160);
+        else if(cursors.right.isDown)
+          player.setVelocityX(160);
+        else
+          player.anims.play('idle', true);
       }
     }
 
