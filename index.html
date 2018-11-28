@@ -3,7 +3,7 @@
 <head> 
     <meta charset="UTF-8" />
     <title>Game</title>
-    <script src="script/phaser.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
     <style type="text/css">
         body {
             margin: 0;
@@ -11,6 +11,8 @@
     </style>
 </head>
 <body>
+
+<audio controls src = 'sounds/music.mp3' autoplay loop hidden id = 'music'></audio>
 
 <script type="text/javascript">
 
@@ -29,21 +31,25 @@
             preload: preload,
             create: create,
             update: update
-        }
+        },
     };
 
     var player;
     var cursors;
     var gifts;
     var yetis;
+    var gameOver;
     var score = 0;
     var platforms;
-    var gameOver = false;
 
     var game = new Phaser.Game(config);
 
+    var audio = document.getElementById('music');
+    audio.volume = 0.2;
+
     function preload ()
     {
+        //load images
         this.load.image('bg', 'image/BG/BG.png');
         this.load.image('tiles1', 'image/Tiles/1.png');
         this.load.image('tiles2', 'image/Tiles/2.png');
@@ -65,13 +71,19 @@
         this.load.image('gift', 'image/Object/gift.png');
         this.load.image('yeti', 'image/Object/yeti.gif');
 
-        //test purpose only, need to change to other sprite
-        this.load.spritesheet('santaIdle', 'image/png/idle.png', { frameWidth: (2039/6), frameHeight: (1640/3) });
-        this.load.spritesheet('santaWalk', 'image/png/walk.png', { frameWidth: (1803/5), frameHeight: (1676/3) });
-        this.load.spritesheet('santaSlide', 'image/png/slide.png', { frameWidth: (1670/3), frameHeight: (1748/4) });
-        this.load.spritesheet('santaJump', 'image/png/jump.png', { frameWidth: (2278/6), frameHeight: (1647/3) });
-        this.load.spritesheet('santaRun', 'image/png/run.png', { frameWidth: (1416/4), frameHeight: (1679/3) });
-        this.load.spritesheet('santaDead', 'image/png/dead.png', { frameWidth: (2006/4), frameHeight: (1753/4) });
+        //load sprites
+        this.load.spritesheet('santaIdle1', 'image/png/idle1.png', { frameWidth: 346, frameHeight: 546 });
+        this.load.spritesheet('santaIdle2', 'image/png/idle2.png', { frameWidth: 346, frameHeight: 546 });
+        this.load.spritesheet('santaWalk1', 'image/png/walk1.png', { frameWidth: 397, frameHeight: 571 });
+        this.load.spritesheet('santaWalk2', 'image/png/walk2.png', { frameWidth: 397, frameHeight: 571 });
+        this.load.spritesheet('santaSlide1', 'image/png/slide1.png', { frameWidth: 563, frameHeight: 437 });
+        this.load.spritesheet('santaSlide2', 'image/png/slide2.png', { frameWidth: 563, frameHeight: 437 });
+        this.load.spritesheet('santaJump1', 'image/png/jump1.png', { frameWidth: 492, frameHeight: 576 });
+        this.load.spritesheet('santaJump2', 'image/png/jump2.png', { frameWidth: 934, frameHeight: 641 });
+        this.load.spritesheet('santaRun1', 'image/png/run1.png', { frameWidth: 450, frameHeight: 568 });
+        this.load.spritesheet('santaRun2', 'image/png/run2.png', { frameWidth: 450, frameHeight: 568 });
+        this.load.spritesheet('santaDead1', 'image/png/dead1.png', { frameWidth: 669, frameHeight: 588 });
+        this.load.spritesheet('santaDead2', 'image/png/dead2.png', { frameWidth: 669, frameHeight: 588 });
     }
 
     function create ()
@@ -113,57 +125,91 @@
         platforms.create(1020, 350, 'tiles15');
 
         //maybe needs update later
-        player = this.physics.add.sprite(100, 200, 'santaIdle');
+        player = this.physics.add.sprite(100, 200, 'santaIdle1');
         player.setDisplaySize((2039/30), (1640/15));
         player.setCollideWorldBounds(true);
 
         //maybe needs update later
         this.anims.create({
-        key: 'left',
-        frames: this.anims.generateFrameNumbers('santaWalk', { start: 0, end: 12 }),
-        frameRate: 10,
-        repeat: -1
+            key: 'left',
+            frames: this.anims.generateFrameNumbers('santaWalk2', { start: 0, end: 12 }),
+            frameRate: 10,
+            repeat: -1
         });
 
         this.anims.create({
-          key: 'idle',
-          frames: this.anims.generateFrameNumbers('santaIdle', { start: 0, end: 15 }),
-          frameRate: 20
+            key: 'idle1',
+            frames: this.anims.generateFrameNumbers('santaIdle1', { start: 0, end: 15 }),
+            frameRate: 20
+        });
+
+        this.anims.create({
+            key: 'idle2',
+            frames: this.anims.generateFrameNumbers('santaIdle2', { start: 0, end: 15 }),
+            frameRate: 20
         });
 
         this.anims.create({
           key: 'right',
-          frames: this.anims.generateFrameNumbers('santaWalk', { start: 0, end: 12 }),
+          frames: this.anims.generateFrameNumbers('santaWalk1', { start: 0, end: 12 }),
           frameRate: 10,
           repeat: -1
         });
 
         this.anims.create({
-          key: 'slide',
-          frames: this.anims.generateFrameNumbers('santaSlide', { start: 0, end: 10 }),
-          frameRate: 10,
-          repeat: -1
+            key: 'slide1',
+            frames: this.anims.generateFrameNumbers('santaSlide1', { start: 0, end: 10 }),
+            frameRate: 10,
+            repeat: -1
         });
 
         this.anims.create({
-          key: 'jump',
-          frames: this.anims.generateFrameNumbers('santaJump', { start: 0, end: 15 }),
-          frameRate: 10,
-          repeat: -1
+            key: 'slide2',
+            frames: this.anims.generateFrameNumbers('santaSlide2', { start: 0, end: 10 }),
+            frameRate: 10,
+            repeat: -1
         });
 
         this.anims.create({
-          key: 'run',
-          frames: this.anims.generateFrameNumbers('santaRun', { start: 0, end: 10 }),
-          frameRate: 10,
-          repeat: -1
+            key: 'jump1',
+            frames: this.anims.generateFrameNumbers('santaJump1', { start: 0, end: 15 }),
+            frameRate: 10,
+            repeat: -1
         });
 
         this.anims.create({
-          key: 'dead',
-          frames: this.anims.generateFrameNumbers('santaDead', { start: 0, end: 16 }),
-          frameRate: 10,
-          repeat: -1
+            key: 'jump2',
+            frames: this.anims.generateFrameNumbers('santaJump2', { start: 0, end: 15 }),
+            frameRate: 10,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'run1',
+            frames: this.anims.generateFrameNumbers('santaRun1', { start: 0, end: 10 }),
+            frameRate: 10,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'run2',
+            frames: this.anims.generateFrameNumbers('santaRun2', { start: 0, end: 10 }),
+            frameRate: 10,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'dead1',
+            frames: this.anims.generateFrameNumbers('santaDead1', { start: 0, end: 16 }),
+            frameRate: 10,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'dead2',
+            frames: this.anims.generateFrameNumbers('santaDead2', { start: 0, end: 16 }),
+            frameRate: 10,
+            repeat: -1
         });
 
 
@@ -193,106 +239,114 @@
 
     function update ()
     {
-      //maybe needs update later
-      if(gameOver)
-      {
-        return;
-      }
+        //maybe needs update later
 
-      if (cursors.left.isDown)
-      {
-        if (cursors.shift.isDown && player.body.touching.down)
+        if(gameOver)
         {
-          player.setVelocityX(-260);
+            document.getElementById('music');
+            audio.volume = 0.0;
+            return;
+        }
 
-          player.anims.play('run', true);
+        if (cursors.left.isDown)
+        {
+            if (cursors.shift.isDown && player.body.touching.down)
+            {
+                player.setVelocityX(-260);
+
+                player.anims.play('run2', true);
+            }
+            else
+            {
+                player.setVelocityX(-160);
+
+                player.anims.play('left', true);
+            }
+        }
+        else if (cursors.right.isDown)
+        {
+            if (cursors.shift.isDown && player.body.touching.down)
+            {
+                player.setVelocityX(260);
+
+                player.anims.play('run1', true);
+            }
+            else
+            {
+                player.setVelocityX(160);
+
+                player.anims.play('right', true);
+              }
         }
         else
         {
-        player.setVelocityX(-160);
+            player.setVelocityX(0);
 
-        player.anims.play('left', true);
+            player.anims.play('idle1', true);
         }
-      }
-      else if (cursors.right.isDown)
-      {
-        if (cursors.shift.isDown && player.body.touching.down)
+
+        if (cursors.up.isDown && player.body.touching.down)
         {
-          player.setVelocityX(260);
-
-          player.anims.play('run', true);
+            player.setVelocityY(-360);
+            
+            player.anims.play('jump', true);
         }
-        else
+
+        //need to add shift slide feature
+        if (cursors.down.isDown && player.body.touching.down)
         {
-          player.setVelocityX(160);
+            if(cursors.left.isDown)
+            {
+                player.setVelocityX(-160);
 
-          player.anims.play('right', true);
+                player.anims.play('slide2', true);
+            }
+            else if(cursors.right.isDown)
+            {
+                player.setVelocityX(160);
+                player.anims.play('slide1', true);
+            }
+            else
+                player.anims.play('idle1', true);
         }
-      }
-      else
-      {
-        player.setVelocityX(0);
-
-        player.anims.play('idle', true);
-      }
-
-      if (cursors.up.isDown && player.body.touching.down)
-      {
-        player.setVelocityY(-360);
-
-        player.anims.play('jump', true);
-      }
-
-      //need to add shift slide feature
-      if (cursors.down.isDown && player.body.touching.down)
-      {
-        player.anims.play('slide', true);
-
-        if(cursors.left.isDown)
-          player.setVelocityX(-160);
-        else if(cursors.right.isDown)
-          player.setVelocityX(160);
-        else
-          player.anims.play('idle', true);
-      }
     }
 
     function collectGift(player, gift)
     {
-      gift.disableBody(true, true);
+        gift.disableBody(true, true);
 
-      score += 10;
-      scoreText.setText('Score: ' + score);
+        score += 10;
+        scoreText.setText('Score: ' + score);
 
-      if (gifts.countActive(true) === 0)
-      {
-        gifts.children.iterate(function (child) {
+        if (gifts.countActive(true) === 0)
+        {
+            gifts.children.iterate(function (child) {
 
-          child.enableBody(true, child.x, 0, true, true);
+                child.enableBody(true, child.x, 0, true, true);
+            });
 
-        });
+          var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
 
-        var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
+          var yeti = yetis.create(x, 16, 'yeti');
+          yeti.setBounce(1);
+          yeti.setCollideWorldBounds(true);
+          yeti.setVelocity(Phaser.Math.Between(-200, 200), 20);
+          yeti.allowGravity = false;
 
-        var yeti = yetis.create(x, 16, 'yeti');
-        yeti.setBounce(1);
-        yeti.setCollideWorldBounds(true);
-        yeti.setVelocity(Phaser.Math.Between(-200, 200), 20);
-        yeti.allowGravity = false;
-
-      }
+        }
 
     }
 
     function die(player, yeti)
     {
-      this.physics.pause();
 
-      gameOver = true;
+        player.anims.play('santaDead1');
+        this.physics.pause();
 
-      //need to change for better animation q 
-      player.anims.play('santaDead');
-      break;
+        gameOver = true;
+
+        //need to change for better animation 
+        break;
     }
 
 </script>
