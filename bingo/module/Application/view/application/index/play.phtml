@@ -114,7 +114,7 @@
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
        
         <input type="submit" value="Save Changes" class="btn btn-primary"/>
-        <button type="button" class="btn btn-danger">Log Out</button>
+        <button type="button" onclick="logOut()" class="btn btn-danger">Log Out</button>
       </div>
     </form>
       
@@ -132,6 +132,10 @@
                       });
                   });
               });
+
+              function logOut(){
+                window.location.href = "/application/logout";
+              }
       </script>
     
 
