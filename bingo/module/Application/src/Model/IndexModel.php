@@ -63,7 +63,7 @@
 	    	return $result;
 	    }
 	    
- 	    public function getHistory($username){
+ 	    public function getHistory($userID){
 	    	$configArray = array(
 			    'driver' => 'Mysqli',
 			    'database' => 'game',
@@ -74,7 +74,7 @@
 			 );
 
 	    	$adapter = new \Zend\Db\Adapter\Adapter($configArray);
- 	    	$query = sprintf("CALL spGetHistory('%s', %s', '%s')", $userID, $oldPassword, $newPassword);
+ 	    	$query = sprintf("CALL spGetHistory(%s)", $userID);
 
  	    	$statement = $adapter->createStatement($query);
     		$result = $statement->execute()->current();

@@ -76,7 +76,15 @@
 <!-- content body -->
 <div class="text-center" style="padding:50px 0">
 <div class="logo">Christmas Dash</div>
-<p style="color: yellow; font-size: 40px;">High Score:</p>
+<p style="color: yellow; font-size: 40px;">High Score:
+  <?php 
+        if(!empty($this->score)){
+          echo $this->score;
+        }
+        else{
+          echo '0';
+        }
+  ?></p>
 <div class="icon">
   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
   <i class="fas fa-cogs" style="font-size:60px; color:white; text-shadow:2px 2px 4px #000000;" ></i>
@@ -94,13 +102,13 @@
       </div>
       <form name= "setPassword" id="setPassword" method="post">
       <div class="modal-body">
-        <?php if( !empty($this->message)){
+        <?php if(!empty($this->message)){
             echo '<div class="alert alert-danger" role="alert">'.$this->message .'div';
           }?>
         Old Password:
-        <input type="Password" name="oldPassword" class="rounded"><br>
+        <input type="Password" name="oldPassword" class="rounded" required=""><br>
         New Password:
-        <input type="Password" name="newPassword" class="rounded">
+        <input type="Password" name="newPassword" class="rounded" required="">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -115,11 +123,11 @@
                   $('#setPassword').on('submit', function(e){
                       e.preventDefault();
                       $.ajax({
-                          url: url, //this is the submit URL
+                          url: '/application/changePassword', //this is the submit URL
                           type: 'POST', //or POST
                           data: $('#setPassword').serialize(),
                           success: function(data){
-                               alert('successfully submitted')
+                               alert(data);
                           }
                       });
                   });

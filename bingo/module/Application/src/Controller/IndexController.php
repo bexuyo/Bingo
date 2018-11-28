@@ -34,7 +34,15 @@ class IndexController extends AbstractActionController
 
     public function playAction()
     {
-        $view = new ViewModel();
+        if(empty($_COOKIE['userID'])){
+            return $this->redirect()->toUrl('/');
+        }
+
+        $result = $this->getHistoryAction();
+
+        $view = new ViewModel(array(
+            'score' => $result['score'],
+        ));
         $view->setTemplate('application/index/play');
 
         return $view;
@@ -92,14 +100,14 @@ class IndexController extends AbstractActionController
 
      public function changePasswordAction()
     {   
-        document.getElementById("setPassword").submit();
-
-        $userID = $this->params()->fromPost('userID', '');
-        $oldPassword =  $this->params()->fromPost('oldPassword', '');
-        $newPassword =  $this->params()->fromPost('newPassword', '');
+        $userID = $_COOKIE['userID'];
+        $oldPassword = $this->params()->fromPost('oldPassword', '');
+        $newPassword = $this->params()->fromPost('newPassword', '');
 
         $model = new IndexModel();
-        $model->changePassword($userID, $oldPassword, $newPassword);
+        $result = $model->changePassword($userID, $oldPassword, $newPassword);
+
+        return $result;
     }
 
     public function insertGameScoreAction(){
@@ -122,13 +130,19 @@ class IndexController extends AbstractActionController
 
      public function getHistoryAction()
     {
-        $userID = $this->params()->fromPost('userID', '');
+        $userID = $_COOKIE['userID'];
 
         $model = new IndexModel();
-        $model->getHistory($userID);
+        $result = $model->getHistory($userID);
+
+        return $result;
     }
 
     public function gameAction(){
+        if(empty($_COOKIE['userID'])){
+            return $this->redirect()->toUrl('/');
+        }
+
         $view = new ViewModel();
         $view->setTemplate('application/index/game');
 
