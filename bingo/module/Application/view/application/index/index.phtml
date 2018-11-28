@@ -1,74 +1,55 @@
-<div class="jumbotron">
-    <h1>Welcome to <span class="zf-green">Zend Framework</span></h1>
 
-    <p>
-        Congratulations! You have successfully installed the
-        <a href="https://github.com/zendframework/ZendSkeletonApplication" target="_blank">ZF Skeleton Application</a>.
-        You are currently running Zend Framework version <?= \Application\Module::VERSION ?>.
-        This skeleton can serve as a simple starting point for you to begin
-        building your application on ZF.
-    </p>
+	<div class="text-center" style="padding:50px 0">
+	<div class="logo">BBFSH.IO</div>
+	<!-- Main Form -->
+	<form action="" method="post" id="login-form">
+		<div class="login-form-1">
+			<div class="login-form-main-message"></div>
+			<div class="main-login-form">
+				<div class="login-group">
+					<?php if( !empty($this->message)){
+						echo '<div class="alert alert-danger" role="alert">'.$this->message .'div';
+					}?>
+					<div class="form-group">
+						<label for="lg_username" class="sr-only">Username</label>
+						<input type="text" class="form-control" id="username" name="username" placeholder="username"
+						 required >
+					</div>
+					<div class="form-group">
+						<label for="lg_password" class="sr-only">Password</label>
+						<input type="password" class="form-control" id="password" name="password" placeholder="password"
+						required>
+					</div>
+					<div class="form-group login-group-checkbox">
+						<button type="submit" onclick="loginSubmit()" class="btn btn-primary">Log In
+							<i class="fas fa-chevron-right"></i>
+						</button>
 
-    <p><a class="btn btn-success btn-lg" href="https://github.com/zendframework/zendframework" target="_blank">Fork Zend Framework on GitHub &raquo;</a></p>
-</div>
+						<button type="submit" onclick="registerSubmit()" class="btn btn-secondary">Register
+							<i class="fas fa-chevron-right"></i>
+						</button>
+					</div>
+					
+				</div>
+				
+				<input type="hidden" name="submitted" value="true">
+			</div>
+		</div>
+	</form>
+	
+<p><img src="<?= $this->basePath('img/main1.gif') ?>" style="width:500px;height:500px;margin-left:-1200px; margin-top: -250px;"></img></p>
+<p><img src="<?= $this->basePath('img/main2.gif') ?>" style="width:400px;height:400px;margin-left:-850px; margin-top: -500px;"></img></p>
+<p><img src="<?= $this->basePath('img/main2.gif') ?>" style="width:300px;height:300px;margin-left:-600px; margin-top: -500px;"></img></p>
+<p><img src="<?= $this->basePath('img/main2.gif') ?>" style="width:200px;height:200px;margin-left:-400px; margin-top: -500px;"></img></p>
+<p><img src="<?= $this->basePath('img/main2.gif') ?>" style="width:150px;height:150px;margin-left:-250px; margin-top: -550px;"></img></p>
+<p><img src="<?= $this->basePath('img/main2.gif') ?>" style="width:100px;height:100px;margin-left:-150px; margin-top: -600px;"></img></p>
+	
+	<script type="text/javascript">
+		function loginSubmit(){
+			document.getElementById("login-form").action = "application/login";
+		}
 
-<div class="row">
-
-    <div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Follow Development</h3>
-            </div>
-            <div class="panel-body">
-                <p>
-                    Zend Framework is under active development. If you are
-                    interested in following the development of ZF, you can check
-                    <a href="http://framework.zend.com/blog/">ZF dev blog</a>,
-                    and <a href="https://github.com/issues?utf8=%E2%9C%93&amp;q=is:issue+org:zendframework">ZF issue tracker</a>
-                    (link requires a GitHub account). This is a great resource
-                    for staying up to date with the latest developments!
-                </p>
-
-                <p><a class="btn btn-success pull-right" href="http://framework.zend.com/" target="_blank">ZF Development Portal &raquo;</a></p>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Discover Modules</h3>
-            </div>
-            <div class="panel-body">
-                <p>
-                    The community is working on developing a community site to
-                    serve as a repository and gallery for ZF modules. The
-                    project is available <a href="https://github.com/zendframework/modules.zendframework.com">on GitHub</a>.
-                    The site is currently live and currently contains a list of
-                    some of the modules already available for ZF.
-                </p>
-
-                <p><a class="btn btn-success pull-right" href="http://modules.zendframework.com/" target="_blank">Explore ZF Modules &raquo;</a></p>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Help &amp; Support</h3>
-            </div>
-            <div class="panel-body">
-                <p>
-                    If you need any help or support while developing with ZF,
-                    you may reach us via IRC: <a href="irc://irc.freenode.net/zftalk">#zftalk on Freenode</a>.
-                    We'd love to hear any questions or feedback you may have
-                    regarding this release. Alternatively, you may subscribe
-                    and post questions to the <a href="http://framework.zend.com/archives/">mailing lists</a>.
-                </p>
-
-                <p><a class="btn btn-success pull-right" href="http://webchat.freenode.net?channels=zftalk" target="_blank">Ping us on IRC &raquo;</a></p>
-            </div>
-        </div>
-    </div>
-</div>
+		function registerSubmit(){
+			document.getElementById("login-form").action = "application/register";
+		}
+	</script>
