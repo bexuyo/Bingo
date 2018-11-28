@@ -1,65 +1,108 @@
+<?= $this->doctype() ?>
+<html>
+<head>
+	<meta charset="utf-8">
+	<?= $this->headTitle('Christmas Dash')->setSeparator(' - ')->setAutoEscape(false) ?>
 
+	<?= $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+    ?>
 
-	<div class="text-center" style="padding:50px 0">
-	<div class="logo">Christmars Dash</div>
-	<!-- Main Form -->
-	<form action="" method="post" id="login-form">
-		<div class="login-form-1">
-			<div class="login-form-main-message"></div>
-			<div class="main-login-form">
-				<div class="login-group">
-					<?php if( !empty($this->message)){
-						echo '<div class="alert alert-danger" role="alert">'.$this->message .'div';
-					}?>
-					<div class="form-group">
-						<label for="lg_username" class="sr-only">Username</label>
-						<input type="text" class="form-control" id="username" name="username" placeholder="username"
-						 required >
-					</div>
-					<div class="form-group">
-						<label for="lg_password" class="sr-only">Password</label>
-						<input type="password" class="form-control" id="password" name="password" placeholder="password"
-						required>
-					</div>
-					<div class="form-group login-group-checkbox">
-						<button type="submit" onclick="loginSubmit()" class="btn btn-primary">Log In
-							<i class="fas fa-chevron-right"></i>
-						</button>
+    <!-- Le styles -->
+        <?= $this->headLink()
+            ->prependStylesheet($this->basePath('css/style.css'))
+            ->prependStylesheet($this->basePath('css/bootstrap-theme.min.css'))
+            ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
+            ->prependStylesheet($this->basePath('css/form.css'))
+        ?>
 
-						<button type="submit" onclick="registerSubmit()" class="btn btn-secondary">Register
-							<i class="fas fa-chevron-right"></i>
-						</button>
+        <!-- Scripts -->
+        <?= $this->headScript()
+            ->prependFile($this->basePath('js/bootstrap.min.js'))
+            ->prependFile($this->basePath('js/jquery-3.1.0.min.js'))
+        ?>
+
+	 <!-- game music -->
+	 
+	 <iframe src="<?= $this->basePath('audio/bgm1.mp3') ?>" controls muted allow="autoplay" id="audio" style="display: none;" ></iframe> 
+				
+	  <audio controls autoplay loop hidden>
+	        <source src="<?= $this->basePath('audio/bgm.mp3') ?>"  type="audio/mp3">
+	    	<source src="<?= $this->basePath('audio/bgm.ogg') ?>" type="audio/ogg">
+	</audio>
+</head>
+
+<body background="<?= $this->basePath('img/bd.gif') ?>" style="background-repeat: no-repeat;
+     
+    background-size: 1700px 1200px;">
+
+    <div class="container">
+
+		<div class="text-center" style="padding:50px 0">
+		<div class="logo">Christmars Dash</div>
+		<!-- Main Form -->
+		<form action="" method="post" id="login-form">
+			<div class="login-form-1">
+				<div class="login-form-main-message"></div>
+				<div class="main-login-form">
+					<div class="login-group">
+						<?php if( !empty($this->message)){
+							echo '<div class="alert alert-danger" role="alert">'.$this->message .'div';
+						}?>
+						<div class="form-group">
+							<label for="lg_username" class="sr-only">Username</label>
+							<input type="text" class="form-control" id="username" name="username" placeholder="username"
+							 required >
+						</div>
+						<div class="form-group">
+							<label for="lg_password" class="sr-only">Password</label>
+							<input type="password" class="form-control" id="password" name="password" placeholder="password"
+							required>
+						</div>
+						<div class="form-group login-group-checkbox">
+							<button type="submit" onclick="loginSubmit()" class="btn btn-primary">Log In
+								<i class="fas fa-chevron-right"></i>
+							</button>
+
+							<button type="submit" onclick="registerSubmit()" class="btn btn-secondary">Register
+								<i class="fas fa-chevron-right"></i>
+							</button>
+						</div>
+						
 					</div>
 					
+					<input type="hidden" name="submitted" value="true">
 				</div>
-				
-				<input type="hidden" name="submitted" value="true">
 			</div>
-		</div>
-	</form>
-	
-<p><img src="<?= $this->basePath('img/main1.gif') ?>" style="width:500px;height:500px;margin-left:-1200px; margin-top: -250px;"></img></p>
+		</form>
+		
+	<p><img src="<?= $this->basePath('img/main1.gif') ?>" style="width:500px;height:500px;margin-left:-1200px; margin-top: -250px;"></img></p>
 
-<p><img src="<?= $this->basePath('img/main2.gif') ?>" style="width:400px;height:400px;margin-left:-850px; margin-top: -500px;"></img></p>
-<p><img src="<?= $this->basePath('img/main2.gif') ?>" style="width:300px;height:300px;margin-left:-600px; margin-top: -500px;"></img></p>
-<p><img src="<?= $this->basePath('img/main2.gif') ?>" style="width:200px;height:200px;margin-left:-400px; margin-top: -500px;"></img></p>
-<p><img src="<?= $this->basePath('img/main2.gif') ?>" style="width:150px;height:150px;margin-left:-250px; margin-top: -550px;"></img></p>
-<p><img src="<?= $this->basePath('img/main2.gif') ?>" style="width:100px;height:100px;margin-left:-150px; margin-top: -600px;"></img></p>
+	<p><img src="<?= $this->basePath('img/main2.gif') ?>" style="width:400px;height:400px;margin-left:-850px; margin-top: -500px;"></img></p>
+	<p><img src="<?= $this->basePath('img/main2.gif') ?>" style="width:300px;height:300px;margin-left:-600px; margin-top: -500px;"></img></p>
+	<p><img src="<?= $this->basePath('img/main2.gif') ?>" style="width:200px;height:200px;margin-left:-400px; margin-top: -500px;"></img></p>
+	<p><img src="<?= $this->basePath('img/main2.gif') ?>" style="width:150px;height:150px;margin-left:-250px; margin-top: -550px;"></img></p>
+	<p><img src="<?= $this->basePath('img/main2.gif') ?>" style="width:100px;height:100px;margin-left:-150px; margin-top: -600px;"></img></p>
 
 
-<p><img src="<?= $this->basePath('img/flip.gif') ?>" style="width:100px;height:100px;margin-left:150px; margin-top: -660px;"></img></p>	
-<p><img src="<?= $this->basePath('img/flip.gif') ?>" style="width:150px;height:150px;margin-left:250px; margin-top: -725px;"></img></p>	
-<p><img src="<?= $this->basePath('img/flip.gif') ?>" style="width:200px;height:200px;margin-left:400px; margin-top: -800px;"></img></p>
-<p><img src="<?= $this->basePath('img/flip.gif') ?>" style="width:300px;height:300px;margin-left:600px; margin-top: -925px;"></img></p>
-<p><img src="<?= $this->basePath('img/flip.gif') ?>" style="width:400px;height:400px;margin-left:800px; margin-top: -1025px;"></img></p>
-<p><img src="<?= $this->basePath('img/flip.gif') ?>" style="width:500px;height:500px; margin-top: -1150px; margin-right : -1200px; " ></img></p>
+	<p><img src="<?= $this->basePath('img/flip.gif') ?>" style="width:100px;height:100px;margin-left:150px; margin-top: -660px;"></img></p>	
+	<p><img src="<?= $this->basePath('img/flip.gif') ?>" style="width:150px;height:150px;margin-left:250px; margin-top: -725px;"></img></p>	
+	<p><img src="<?= $this->basePath('img/flip.gif') ?>" style="width:200px;height:200px;margin-left:400px; margin-top: -800px;"></img></p>
+	<p><img src="<?= $this->basePath('img/flip.gif') ?>" style="width:300px;height:300px;margin-left:600px; margin-top: -925px;"></img></p>
+	<p><img src="<?= $this->basePath('img/flip.gif') ?>" style="width:400px;height:400px;margin-left:800px; margin-top: -1025px;"></img></p>
+	<p><img src="<?= $this->basePath('img/flip.gif') ?>" style="width:500px;height:500px; margin-top: -1150px; margin-right : -1200px; " ></img></p>
 
-	<script type="text/javascript">
-		function loginSubmit(){
-			document.getElementById("login-form").action = "application/login";
-		}
+		<script type="text/javascript">
+			function loginSubmit(){
+				document.getElementById("login-form").action = "application/login";
+			}
 
-		function registerSubmit(){
-			document.getElementById("login-form").action = "application/register";
-		}
-	</script>
+			function registerSubmit(){
+				document.getElementById("login-form").action = "application/register";
+			}
+		</script>
+    </div>
+
+</body>
+</html>

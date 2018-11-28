@@ -12,7 +12,11 @@
 </head>
 <body>
 
-<audio controls src = 'sounds/music.mp3' autoplay loop hidden id = 'music'></audio>
+<iframe src="sounds/bgm1.mp3" controls muted allow="autoplay" id="audio" style="display: none;" ></iframe> 
+
+<audio controls autoplay loop hidden id = 'music'>
+	<source src="sounds/music.mp3"  type="audio/mp3">
+</audio>	
 
 <script type="text/javascript">
 
