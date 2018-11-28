@@ -93,7 +93,7 @@
 			 );
 
 	    	$adapter = new \Zend\Db\Adapter\Adapter($configArray);
- 	    	$query = sprintf("CALL spInsertGameScore('%s', %s')", $userID, $score);
+ 	    	$query = sprintf("CALL spInsertGameScore('%s', %s)", $userID, $score);
 
  	    	$statement = $adapter->createStatement($query);
     		$result = $statement->execute()->current();

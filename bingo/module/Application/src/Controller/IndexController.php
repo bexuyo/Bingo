@@ -120,21 +120,23 @@ class IndexController extends AbstractActionController
     }
 
     public function insertGameScoreAction(){
+        if(empty($_COOKIE['userID'])){
+            return $this->redirect()->toUrl('/');
+        }
+
         $userID = $_COOKIE['userID'];
 
         $model = new IndexModel();
-        $score = $this->params()->fromPost('score', '');
+        $score = $_GET['score'];
         
-        $model->insertGameScore($userID, $score);
+        $result = $model->insertGameScore($userID, $score);
 
-        if($result['status'] == 'ok')
-            return $this->redirect()->toUrl('/application/play');
-        else{
-            $container = new Container('message');
-            $container->message = $result['Error message']; 
-
-            return $this->redirect()->toUrl('/');
+        if($result['status'] != 'ok'){
+            echo "Error: ".$result['Error message'];
+            sleep(2);
         }
+
+        return $this->redirect()->toUrl('/application/gameOver');
     }
 
      public function getHistoryAction()

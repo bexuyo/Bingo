@@ -249,7 +249,8 @@
         {
             document.getElementById('music');
             audio.volume = 0.0;
-            window.location.href = "/application/gameOver";
+
+            window.location.href = "/application/insertGameScore?score=" + score;
             return;
         }
 
