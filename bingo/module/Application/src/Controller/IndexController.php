@@ -90,5 +90,12 @@ class IndexController extends AbstractActionController
         $model = new IndexModel();
         $model->getHistory($userID);
     }
+
+    public function gameAction(){
+        $view = new ViewModel();
+        $view->setTemplate('application/index/game');
+
+        return $view;
+    }
 }
 	
