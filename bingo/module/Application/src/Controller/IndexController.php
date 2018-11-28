@@ -18,7 +18,7 @@ class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
-         if(isset($container->message))
+        if(isset($container->message))
             $message = $container->message;
         else
             $message = null;
@@ -74,13 +74,30 @@ class IndexController extends AbstractActionController
     {   
         document.getElementById("setPassword").submit();
 
-
         $userID = $this->params()->fromPost('userID', '');
         $oldPassword =  $this->params()->fromPost('oldPassword', '');
         $newPassword =  $this->params()->fromPost('newPassword', '');
 
         $model = new IndexModel();
         $model->changePassword($userID, $oldPassword, $newPassword);
+    }
+
+    public function insertGameScoreAction(){
+        $userID = $_COOKIE['userID'];
+
+        $model = new IndexModel();
+        $score = $this->params()->fromPost('score', '');
+        
+        $model->insertGameScore($userID, $score);
+
+        if($result['status'] == 'ok')
+            return $this->redirect()->toUrl('/application/play');
+        else{
+            $container = new Container('message');
+            $container->message = $result['Error message']; 
+
+            return $this->redirect()->toUrl('/');
+        }
     }
 
      public function getHistoryAction()
