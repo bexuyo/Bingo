@@ -24,15 +24,19 @@
         ?>
 
 	 <!-- game music -->
-<!-- 	 <iframe src="<?= $this->basePath('audio/bgm.mp3') ?>" allow="autoplay" id="audio player" style="display: none;" ></iframe> -->
-	 <audio id="player" autoplay loop>
+	 
+	 <iframe src="<?= $this->basePath('audio/bgm1.mp3') ?>" controls muted allow="autoplay" id="audio" style="display: none;" ></iframe> 
+				
+	  <audio  controls autoplay loop hidden>
 	        <source src="<?= $this->basePath('audio/bgm.mp3') ?>"  type="audio/mp3">
 	    	<source src="<?= $this->basePath('audio/bgm.ogg') ?>" type="audio/ogg">
 	</audio>
 </head>
 
 <body background="<?= $this->basePath('img/bd.gif') ?>" style="background-repeat: no-repeat;
-    background-size: 1600px 1000px;">
+     
+    background-size: 1700px 1200px;">
+
     <div class="container">
     	<?= $this->content ?>
     </div>

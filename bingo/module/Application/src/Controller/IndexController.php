@@ -22,7 +22,7 @@ class IndexController extends AbstractActionController
             $message = $container->message;
         else
             $message = null;
-        
+
         $view = new ViewModel(array(
             'message' => $message,
         ));
@@ -71,7 +71,10 @@ class IndexController extends AbstractActionController
     }
 
      public function changePasswordAction()
-    {
+    {   
+        document.getElementById("setPassword").submit();
+
+
         $userID = $this->params()->fromPost('userID', '');
         $oldPassword =  $this->params()->fromPost('oldPassword', '');
         $newPassword =  $this->params()->fromPost('newPassword', '');
@@ -86,6 +89,13 @@ class IndexController extends AbstractActionController
 
         $model = new IndexModel();
         $model->getHistory($userID);
+    }
+
+    public function gameAction(){
+        $view = new ViewModel();
+        $view->setTemplate('application/index/game');
+
+        return $view;
     }
 }
 	
