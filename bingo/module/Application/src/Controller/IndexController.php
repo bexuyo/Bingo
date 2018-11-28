@@ -8,6 +8,8 @@
 namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
+use Zend\Http\Request;
+use Zend\Session\Container;
 use Zend\View\Model\ViewModel;
 use Zend\Db\Adapter\Adapter;
 use Application\Model\IndexModel;
@@ -16,22 +18,53 @@ class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
-        return new ViewModel();
+         if(isset($container->message))
+            $message = $container->message;
+        else
+            $message = null;
+        
+        $view = new ViewModel(array(
+            'message' => $message,
+        ));
+        $view->setTemplate('application/index/index');
+
+        return $view;
+    }
+
+    public function playAction()
+    {
+        $view = new ViewModel();
+        $view->setTemplate('application/index/play');
+
+        return $view;
     }
 
     public function loginAction()
     {
-        $username = isset($_POST['username']) ? $_POST['username'] : '';
-        $password = isset($_POST['password']) ? $_POST['password'] : '';
+        $username = $this->params()->fromPost('username', '');
+        $password = $this->params()->fromPost('password', '');
 
     	$model = new IndexModel();
-    	$model->login($username, $password);
+    	$result = $model->login($username, $password);
+
+        if($result['status'] == 'ok'){
+            setcookie('userID', $result['userID'], time() + 3600, '/');
+            setcookie('username', $result['username'], time() + 3600, '/');
+
+            return $this->redirect()->toUrl('/application/play');
+        }
+        else{
+            $container = new Container('message');
+            $container->message = $result['Error message']; 
+
+            return $this->redirect()->toUrl('/');
+        }
     }
 
      public function registerAction()
     {
-        $username = isset($_POST['username']) ? $_POST['username'] : '';
-        $password = isset($_POST['password']) ? $_POST['password'] : '';
+        $username = $this->params()->fromPost('username', '');
+        $password = $this->params()->fromPost('password', '');
 
         $model = new IndexModel();
         $model->register($username, $password);
@@ -39,9 +72,9 @@ class IndexController extends AbstractActionController
 
      public function changePasswordAction()
     {
-        $userID = isset($_POST['userID']) ? $_POST['userID'] : '';
-        $oldPassword = isset($_POST['username']) ? $_POST['username'] : '';
-        $newPassword = isset($_POST['password']) ? $_POST['password'] : '';
+        $userID = $this->params()->fromPost('userID', '');
+        $oldPassword =  $this->params()->fromPost('oldPassword', '');
+        $newPassword =  $this->params()->fromPost('newPassword', '');
 
         $model = new IndexModel();
         $model->changePassword($userID, $oldPassword, $newPassword);
@@ -49,7 +82,7 @@ class IndexController extends AbstractActionController
 
      public function getHistoryAction()
     {
-        $userID = isset($_POST['userID']) ? $_POST['userID'] : '';
+        $userID = $this->params()->fromPost('userID', '');
 
         $model = new IndexModel();
         $model->getHistory($userID);
