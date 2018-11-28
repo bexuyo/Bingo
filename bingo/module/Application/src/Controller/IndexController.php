@@ -18,10 +18,10 @@ class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
-        if(isset($container->message))
-            $message = $container->message;
+        if(isset($_COOKIE['ErrorMessage']))
+            $message = $_COOKIE['ErrorMessage'];
         else
-            $message = null;
+            $message = '';
 
         $view = new ViewModel(array(
             'message' => $message,
@@ -54,8 +54,7 @@ class IndexController extends AbstractActionController
             return $this->redirect()->toUrl('/application/play');
         }
         else{
-            $container = new Container('message');
-            $container->message = $result['Error message']; 
+            setcookie('ErrorMessage', $result['Error message'], time() + 60, '/');
 
             return $this->redirect()->toUrl('/');
         }
