@@ -51,6 +51,7 @@ class IndexController extends AbstractActionController
             setcookie('userID', $result['userID'], time() + 3600, '/');
             setcookie('username', $result['username'], time() + 3600, '/');
             unset($_COOKIE['ErrorMessage']);
+            setcookie('ErrorMessage', '', time() - 3600);
 
             return $this->redirect()->toUrl('/application/play');
         }
