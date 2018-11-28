@@ -81,6 +81,25 @@
 
     		return $result;
 	    }
+
+	    public function insertGameScore($userID, $score){
+	    	$configArray = array(
+			    'driver' => 'Mysqli',
+			    'database' => 'game',
+			    'username' => 'gameOwner@phpgameserver',
+			    'password' => 'Password123',
+			    'hostname' => 'phpgameserver.mysql.database.azure.com',
+			    'port' => '3306'
+			 );
+
+	    	$adapter = new \Zend\Db\Adapter\Adapter($configArray);
+ 	    	$query = sprintf("CALL spInsertGameScore('%s', %s')", $userID, $score);
+
+ 	    	$statement = $adapter->createStatement($query);
+    		$result = $statement->execute()->current();
+
+    		return $result;
+	    }
 	}
 
 ?>
