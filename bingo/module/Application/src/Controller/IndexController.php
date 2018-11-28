@@ -108,7 +108,7 @@ class IndexController extends AbstractActionController
             $model = new IndexModel();
             $result = $model->changePassword($userID, $oldPassword, $newPassword);
 
-                echo $result;
+                echo json_encode($result);
                 exit(); 
         } else {
             echo 'Access denied: Not ajax';
@@ -155,6 +155,17 @@ class IndexController extends AbstractActionController
         return $view;
     }
 
+    public function gameOverAction(){
+        if(empty($_COOKIE['userID'])){
+            return $this->redirect()->toUrl('/');
+        }
+
+        $view = new ViewModel();
+        $view->setTemplate('application/index/gameOver');
+
+        return $view;
+    }
+
     public function logoutAction(){
         $past = time() - 3600;
         foreach ($_COOKIE as $key => $value )
@@ -164,5 +175,7 @@ class IndexController extends AbstractActionController
 
         return $this->redirect()->toUrl('/');
     }
+
+
 }
 	

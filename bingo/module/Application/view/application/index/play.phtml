@@ -127,7 +127,14 @@
                           type: 'POST', //or POST
                           data: $('#setPassword').serialize(),
                           success: function(data){
-                               alert(data);
+                            alert(data);
+                            data = JSON.parse(data);
+                            
+                               if(data.status == 'ok'){
+                                  alert('ok');
+                               } else {
+                                  alert('not ok');
+                               }
                           }
                       });
                   });
