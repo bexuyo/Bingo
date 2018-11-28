@@ -18,6 +18,7 @@ class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
+        //var_dump($_COOKIE);
         if(isset($_COOKIE['ErrorMessage']))
             $message = $_COOKIE['ErrorMessage'];
         else
@@ -50,6 +51,8 @@ class IndexController extends AbstractActionController
         if($result['status'] == 'ok'){
             setcookie('userID', $result['userID'], time() + 3600, '/');
             setcookie('username', $result['username'], time() + 3600, '/');
+
+            // delete cookie error message
             unset($_COOKIE['ErrorMessage']);
             setcookie('ErrorMessage', '', time() - 3600);
 
@@ -68,7 +71,23 @@ class IndexController extends AbstractActionController
         $password = $this->params()->fromPost('password', '');
 
         $model = new IndexModel();
-        $model->register($username, $password);
+        $result = $model->register($username, $password);
+
+        if($result['status'] == 'ok'){
+            setcookie('userID', $result['userID'], time() + 3600, '/');
+            setcookie('username', $result['username'], time() + 3600, '/');
+
+            // delete cookie erroe message
+            unset($_COOKIE['ErrorMessage']);
+            setcookie('ErrorMessage', '', time() - 3600);
+
+            return $this->redirect()->toUrl('/application/play');
+        }
+        else{
+            setcookie('ErrorMessage', $result['Error message'], time() + 60, '/');
+
+            return $this->redirect()->toUrl('/');
+        }
     }
 
      public function changePasswordAction()
