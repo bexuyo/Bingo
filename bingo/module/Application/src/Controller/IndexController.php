@@ -18,7 +18,10 @@ class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
-        //var_dump($_COOKIE);
+        if(isset($_COOKIE['userID'])){
+            return $this->redirect()->toUrl('/application/play');
+        }
+
         if(isset($_COOKIE['ErrorMessage']))
             $message = $_COOKIE['ErrorMessage'];
         else

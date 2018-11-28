@@ -28,7 +28,7 @@
    <iframe src="<?= $this->basePath('audio/bgm1.mp3') ?>" controls muted allow="autoplay" id="audio" style="display: none;" ></iframe> 
         
     <audio  controls autoplay loop hidden>
-          <source src="<?= $this->basePath('audio/bgm.mp3') ?>"  type="audio/mp3">
+        <source src="<?= $this->basePath('audio/bgm.mp3') ?>"  type="audio/mp3">
         <source src="<?= $this->basePath('audio/bgm.ogg') ?>" type="audio/ogg">
   </audio>
 </head>
@@ -86,7 +86,7 @@
         }
   ?></p>
 <div class="icon">
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+  <button type="button" class="btn btn-primary" id="modal_button" data-toggle="modal" data-target="#exampleModalCenter">
   <i class="fas fa-cogs" style="font-size:60px; color:white; text-shadow:2px 2px 4px #000000;" ></i>
   </button>
 </div>
@@ -102,9 +102,8 @@
       </div>
       <form name= "setPassword" id="setPassword" method="post">
       <div class="modal-body">
-        <?php if(!empty($this->message)){
-            echo '<div class="alert alert-danger" role="alert">'.$this->message .'div';
-          }?>
+      <div class="alert alert-danger hide" role="alert" id="error_message"></div>
+      <div class="alert alert-success hide" role="alert" id="success_message"></div>
         Old Password:
         <input type="Password" name="oldPassword" class="rounded" required=""><br>
         New Password:
@@ -127,18 +126,27 @@
                           type: 'POST', //or POST
                           data: $('#setPassword').serialize(),
                           success: function(data){
-                            alert(data);
+
                             data = JSON.parse(data);
-                            
+
                                if(data.status == 'ok'){
-                                  alert('ok');
+                                  $('#error_message').addClass('hide');
+                                  $('#success_message').removeClass('hide');
+                                  $('#success_message').text('Password changed!');
                                } else {
-                                  alert('not ok');
+                                  $('#error_message').removeClass('hide');
+                                   $('#success_message').addClass('hide');
+                                  $('#error_message').text(data['Error Message']);
                                }
                           }
                       });
                   });
               });
+
+             $('#modal_button').click(function(){
+              $('#error_message').addClass('hide');
+              $('#success_message').addClass('hide');
+             });
 
               function logOut(){
                 window.location.href = "/application/logout";

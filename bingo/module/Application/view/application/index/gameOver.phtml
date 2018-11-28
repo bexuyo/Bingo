@@ -21,10 +21,23 @@
                 right: 35%;
             }
         </style>
-
+            <iframe src="<?= $this->basePath('audio/bgm1.mp3') ?>" controls muted allow="autoplay" id="audio" style="display: none;" ></iframe> 
+      <audio  controls autoplay loop hidden>
+            <source src="<?= $this->basePath('audio/gameover.mp3') ?>"  type="audio/mp3">
+    </audio>
 </head>
-<body background = "<?= $this->basePath('img/overBG.png') ?>">
-    <a class = "btn btn-success btn-lg button1 pull-right" href = "<?= $this->basePath('/') ?>" role = "button">Play Again</button></a>
-    <button type = "button" class = "btn btn-info btn-lg button2">Main Menu</button>
+<body background = "<?= $this->basePath('img/bd.gif') ?>" style="background-repeat: no-repeat;
+     
+    background-size: 1700px 1200px;">
+    <p><img src="<?= $this->basePath('img/gameover.gif') ?>" style=" min-height: 150px;
+    min-width: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;" ></p>
+
+    <a class = "btn btn-success btn-lg button1 pull-right" href = "<?= $this->basePath('application/game') ?>" role = "button">Play Again</a>
+     <a class = "btn btn-info btn-lg button2" href = "<?= $this->basePath('/application/play') ?>" role = "button">Main Menu</a>
 </body>
 </html>
