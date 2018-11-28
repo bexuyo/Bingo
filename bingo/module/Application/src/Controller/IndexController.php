@@ -100,14 +100,20 @@ class IndexController extends AbstractActionController
 
      public function changePasswordAction()
     {   
-        $userID = $_COOKIE['userID'];
-        $oldPassword = $this->params()->fromPost('oldPassword', '');
-        $newPassword = $this->params()->fromPost('newPassword', '');
+        if ($this->getRequest()->isXmlHttpRequest()) {
+            $userID = $_COOKIE['userID'];
+            $oldPassword = $this->params()->fromPost('oldPassword', '');
+            $newPassword = $this->params()->fromPost('newPassword', '');
 
-        $model = new IndexModel();
-        $result = $model->changePassword($userID, $oldPassword, $newPassword);
+            $model = new IndexModel();
+            $result = $model->changePassword($userID, $oldPassword, $newPassword);
 
-        return $result;
+                echo $result;
+                exit(); 
+        } else {
+            echo 'Access denied: Not ajax';
+            exit();
+        }
     }
 
     public function insertGameScoreAction(){
