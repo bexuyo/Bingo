@@ -17,7 +17,6 @@
             ->prependStylesheet($this->basePath('css/form.css'))
         ?>
 
-<<<<<<< HEAD
         <!-- Scripts -->
         <?= $this->headScript()
             ->prependFile($this->basePath('js/bootstrap.min.js'))
@@ -40,47 +39,40 @@
 
     <div class="container">
       <style type="text/css">
-        .icon {
-        position: absolute;
-        /* Adjust these values accordingly */
-        top: 0px;
-        right: 50px;
-        }
-        <style>
-      .introbg {
-          bottom: 100px;
-          border: 10px solid #ffffff;
-      }
-      .bgcolor{
-        background-color: #ffffff;
-        border-radius: 50px;
-        border-width: thin;
-        border-color: coral;
-      }
-      </style>
-      </style>
+  .icon {
+  position: absolute;
+  /* Adjust these values accordingly */
+  top: 0px;
+  right: 50px;
+  }
+  <style>
+.introbg {
+    bottom: 100px;
+    border: 10px solid #ffffff;
+}
+.bgcolor{
+  background-color: #ffffff;
+  border-radius: 50px;
+  border-width: thin;
+  border-color: coral;
+}
+</style>
+</style>
 
-      <!-- extra css -->
-      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-      <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-        rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" 
-        crossorigin="anonymous">
+<!-- extra css -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+  rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" 
+  crossorigin="anonymous">
 
-       <!-- extra js -->
-         <script
-        src="https://code.jquery.com/jquery-3.3.1.min.js"
-        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous"></script>
-        
-      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js" integrity="sha384-pjaaA8dDz/5BgdFUPX6M/9SUZv4d12SUPF0axWc+VRZkx5xU3daN+lYb49+Ax+Tl" crossorigin="anonymous"></script>
+ <!-- extra js -->
+   <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+  
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js" integrity="sha384-pjaaA8dDz/5BgdFUPX6M/9SUZv4d12SUPF0axWc+VRZkx5xU3daN+lYb49+Ax+Tl" crossorigin="anonymous"></script>
 
-      <!-- content body -->
-      <div class="text-center" style="padding:50px 0">
-      <div class="logo">Christmars Dash</div>
-      <div class="icon">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-        <i class="fas fa-cogs" style="font-size:60px; color:white; text-shadow:2px 2px 4px #000000;" ></i>
-=======
 <!-- content body -->
 <div class="text-center" style="padding:50px 0">
 <div class="logo">Christmas Dash</div>
@@ -98,63 +90,52 @@
         <h5 class="modal-title" id="exampleModalLongTitle">Settings</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
->>>>>>> 20ea367decc3db089ebb924262f048a312333968
         </button>
       </div>
-      <!-- Modal -->
-      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">Settings</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <form name= "setPassword" id="setPassword" method="post">
-            <div class="modal-body">
-              <?php if( !empty($this->message)){
-                  echo '<div class="alert alert-danger" role="alert">'.$this->message .'div';
-                }?>
-              Old Password:
-              <input type="Password" name="oldPassword" class="rounded"><br>
-              New Password:
-              <input type="Password" name="newPassword" class="rounded">
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-             
-              <input type="submit" value="Save Changes" class="btn btn-primary"/>
-            </div>
-          </form>
-            
-            <script >
-                            $(function(){
-                        $('#setPassword').on('submit', function(e){
-                            e.preventDefault();
-                            $.ajax({
-                                url: url, //this is the submit URL
-                                type: 'POST', //or POST
-                                data: $('#setPassword').serialize(),
-                                success: function(data){
-                                     alert('successfully submitted')
-                                }
-                            });
-                        });
-                    });
-            </script>
-          
-
-
-          </div>
-        </div>
+      <form name= "setPassword" id="setPassword" method="post">
+      <div class="modal-body">
+        <?php if( !empty($this->message)){
+            echo '<div class="alert alert-danger" role="alert">'.$this->message .'div';
+          }?>
+        Old Password:
+        <input type="Password" name="oldPassword" class="rounded"><br>
+        New Password:
+        <input type="Password" name="newPassword" class="rounded">
       </div>
-
-         <a href ="game.phtml"><img src="<?= $this->basePath('img/play.gif') ?>"></a>
-          <div class="introbg ">
-           <p><img class="bgcolor" src="<?= $this->basePath('img/introgame2.gif') ?>" height="150" width="250"></p>
-
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+       
+        <input type="submit" value="Save Changes" class="btn btn-primary"/>
       </div>
+    </form>
+      
+      <script >
+                      $(function(){
+                  $('#setPassword').on('submit', function(e){
+                      e.preventDefault();
+                      $.ajax({
+                          url: url, //this is the submit URL
+                          type: 'POST', //or POST
+                          data: $('#setPassword').serialize(),
+                          success: function(data){
+                               alert('successfully submitted')
+                          }
+                      });
+                  });
+              });
+      </script>
+    
+
+
+    </div>
+  </div>
+</div>
+
+   <a href ="<?= $this->basePath('application/game') ?>"><img src="<?= $this->basePath('img/play.gif') ?>"></a>
+    <div class="introbg ">
+     <p><img class="bgcolor" src="<?= $this->basePath('img/introgame2.gif') ?>" height="150" width="250"></p>
+
+</div>
     </div>
 
 </body>

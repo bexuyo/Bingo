@@ -9,7 +9,6 @@
             ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
     ?>
 
-<<<<<<< HEAD
     <!-- Le styles -->
         <?= $this->headLink()
             ->prependStylesheet($this->basePath('css/style.css'))
@@ -33,33 +32,6 @@
 	    	<source src="<?= $this->basePath('audio/bgm.ogg') ?>" type="audio/ogg">
 	</audio>
 </head>
-=======
-	<div class="text-center" style="padding:50px 0">
-	<div class="logo">Christmas Dash</div>
-	<!-- Main Form -->
-	<form action="" method="post" id="login-form">
-		<div class="login-form-1">
-			<div class="login-form-main-message"></div>
-			<div class="main-login-form">
-				<div class="login-group">
-					<?php if( !empty($this->message)){
-						echo '<div class="alert alert-danger" role="alert">'.$this->message .'div';
-					}?>
-					<div class="form-group">
-						<label for="lg_username" class="sr-only">Username</label>
-						<input type="text" class="form-control" id="username" name="username" placeholder="username"
-						 required >
-					</div>
-					<div class="form-group">
-						<label for="lg_password" class="sr-only">Password</label>
-						<input type="password" class="form-control" id="password" name="password" placeholder="password"
-						required>
-					</div>
-					<div class="form-group login-group-checkbox">
-						<button type="submit" onclick="loginSubmit()" class="btn btn-primary">Log In
-							<i class="fas fa-chevron-right"></i>
-						</button>
->>>>>>> 20ea367decc3db089ebb924262f048a312333968
 
 <body background="<?= $this->basePath('img/bd.gif') ?>" style="background-repeat: no-repeat;
      
@@ -125,7 +97,6 @@
 			function loginSubmit(){
 				document.getElementById("login-form").action = "application/login";
 			}
-
 			function registerSubmit(){
 				document.getElementById("login-form").action = "application/register";
 			}
