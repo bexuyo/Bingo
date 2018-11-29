@@ -9,7 +9,6 @@ namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Http\Request;
-use Zend\Session\Container;
 use Zend\View\Model\ViewModel;
 use Zend\Db\Adapter\Adapter;
 use Application\Model\IndexModel;
